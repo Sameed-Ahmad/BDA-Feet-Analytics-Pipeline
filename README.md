@@ -1024,9 +1024,6 @@ docker exec namenode hdfs dfs -ls /warehouse/warm/telemetry/
 # Graceful shutdown (recommended)
 # Press Ctrl+C in the terminal running start_pipeline.sh
 
-# Or use stop script
-./scripts/stop_pipeline.sh
-
 # Stop Docker services
 docker-compose down
 
