@@ -1,0 +1,27 @@
+FROM bde2020/spark-master:3.2.1-hadoop3.2
+
+USER root
+
+# Alpine uses apk, not apt-get
+RUN apk update && \
+    apk add --no-cache \
+    gcc \
+    g++ \
+    gfortran \
+    musl-dev \
+    linux-headers \
+    python3-dev
+
+# Upgrade pip
+RUN pip3 install --upgrade pip
+
+# Install Python packages (avoiding pandas to save time)
+RUN pip3 install --no-cache-dir \
+    pymongo==4.3.3 \
+    kafka-python==2.0.2
+
+# Clean up
+RUN apk del gcc g++ gfortran musl-dev linux-headers python3-dev && \
+    rm -rf /var/cache/apk/*
+
+USER 1000

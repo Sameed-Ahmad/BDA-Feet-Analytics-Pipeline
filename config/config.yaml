@@ -1,0 +1,78 @@
+# Fleet Analytics Pipeline - Main Configuration
+
+project:
+  name: "Fleet Analytics Pipeline"
+  version: "1.0.0"
+  description: "Real-time fleet analytics with Kafka, Spark, MongoDB, Hadoop"
+
+data_generation:
+  vehicles: 500
+  drivers: 350
+  warehouses: 20
+  customers: 10000
+  telemetry_interval_seconds: 3
+  
+statistical_models:
+  markov_chain:
+    states: ["warehouse", "highway", "urban", "customer"]
+    transition_matrix:
+      warehouse: [0.0, 0.7, 0.2, 0.1]
+      highway: [0.0, 0.6, 0.3, 0.1]
+      urban: [0.0, 0.2, 0.6, 0.2]
+      customer: [0.5, 0.3, 0.2, 0.0]
+  
+  gaussian_speed:
+    highway_mean: 90
+    highway_std: 15
+    urban_mean: 45
+    urban_std: 10
+  
+  poisson_incidents:
+    base_lambda: 0.1
+    aggressive_driver_multiplier: 2.5
+  
+  ar_temperature:
+    phi: 0.95
+    mean_temp: 85
+    std: 5
+
+kpis:
+  - name: "average_speed"
+    description: "Average vehicle speed by dimension"
+  - name: "total_distance"
+    description: "Total distance traveled"
+  - name: "fuel_consumption"
+    description: "Total fuel consumed"
+  - name: "delivery_time_variance"
+    description: "Variance in delivery times"
+  - name: "incident_rate"
+    description: "Safety incidents per 1000 km"
+  - name: "vehicle_utilization"
+    description: "Percentage of time vehicles are active"
+  - name: "driver_performance_score"
+    description: "Composite driver performance metric"
+  - name: "on_time_delivery_rate"
+    description: "Percentage of on-time deliveries"
+  - name: "maintenance_frequency"
+    description: "Average days between maintenance"
+  - name: "cost_per_delivery"
+    description: "Average cost per delivery"
+
+archiving:
+  hot_tier:
+    storage: "MongoDB"
+    retention_hours: 48
+    description: "Recent data for real-time queries"
+  
+  warm_tier:
+    storage: "HDFS Parquet"
+    retention_days: 30
+    path: "/warehouse/warm"
+    description: "Recent historical data"
+  
+  cold_tier:
+    storage: "HDFS ORC"
+    retention_days: 365
+    path: "/warehouse/cold"
+    compression: "snappy"
+    description: "Long-term archive"

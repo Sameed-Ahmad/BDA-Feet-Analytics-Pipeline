@@ -1,0 +1,555 @@
+{
+  "dashboard": {
+    "title": "Fleet Analytics Dashboard",
+    "tags": ["fleet", "analytics", "real-time"],
+    "timezone": "browser",
+    "refresh": "60s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Total Vehicles",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:total_vehicles",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 4,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "textMode": "value_and_name",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "green"
+                },
+                {
+                  "value": 100,
+                  "color": "#EAB839"
+                },
+                {
+                  "value": 400,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "none",
+            "displayName": "Total Vehicles"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Average Speed",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:avg_speed_kmh",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 4,
+          "y": 0,
+          "w": 4,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "textMode": "value_and_name",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 10,
+                  "color": "orange"
+                },
+                {
+                  "value": 30,
+                  "color": "yellow"
+                },
+                {
+                  "value": 50,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "velocitykmh",
+            "decimals": 1,
+            "displayName": "Average Speed"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Drivers On Route",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:drivers_on_route",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 8,
+          "y": 0,
+          "w": 4,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "textMode": "value",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "#EAB839"
+                },
+                {
+                  "value": 20,
+                  "color": "yellow"
+                },
+                {
+                  "value": 50,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "none",
+            "displayName": "Drivers On Route"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Total Incidents",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:total_incidents",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 4,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "textMode": "value",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "green"
+                },
+                {
+                  "value": 10,
+                  "color": "yellow"
+                },
+                {
+                  "value": 50,
+                  "color": "red"
+                }
+              ]
+            },
+            "unit": "none",
+            "displayName": "Total Incidents"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Average Fuel Level",
+        "type": "gauge",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:avg_fuel_level_percent",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 16,
+          "y": 0,
+          "w": 4,
+          "h": 4
+        },
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 30,
+                  "color": "yellow"
+                },
+                {
+                  "value": 60,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "decimals": 1,
+            "displayName": "Avg Fuel Level"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "title": "Delivery Success Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:delivery_success_rate_percent",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 0,
+          "y": 4,
+          "w": 5,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "textMode": "value_and_name",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 50,
+                  "color": "orange"
+                },
+                {
+                  "value": 80,
+                  "color": "yellow"
+                },
+                {
+                  "value": 95,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "percent",
+            "decimals": 1,
+            "displayName": "Delivery Success Rate"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Average Driver Rating",
+        "type": "gauge",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:avg_driver_rating",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 5,
+          "y": 4,
+          "w": 5,
+          "h": 4
+        },
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "red"
+                },
+                {
+                  "value": 3,
+                  "color": "yellow"
+                },
+                {
+                  "value": 4,
+                  "color": "green"
+                }
+              ]
+            },
+            "unit": "none",
+            "min": 0,
+            "max": 5,
+            "decimals": 2,
+            "displayName": "Avg Driver Rating"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "title": "Total Deliveries",
+        "type": "stat",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:kpi:total_deliveries",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 10,
+          "y": 4,
+          "w": 5,
+          "h": 4
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "textMode": "value",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "value": null,
+                  "color": "blue"
+                }
+              ]
+            },
+            "unit": "none",
+            "displayName": "Total Deliveries"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Vehicles by Type",
+        "type": "table",
+        "targets": [
+          {
+            "datasource": {
+              "type": "redis-datasource",
+              "uid": "redis"
+            },
+            "command": "get",
+            "query": "cache:mongo:vehicles_by_type",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "x": 15,
+          "y": 4,
+          "w": 5,
+          "h": 4
+        },
+        "options": {
+          "showHeader": true,
+          "sortBy": []
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "center",
+              "displayMode": "auto"
+            }
+          }
+        },
+        "transformations": [
+          {
+            "id": "convertFieldType",
+            "options": {
+              "conversions": [
+                {
+                  "targetField": "Value",
+                  "destinationType": "number"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "annotations": {
+      "list": []
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "links": [],
+    "liveNow": false,
+    "style": "dark",
+    "schemaVersion": 38,
+    "version": 1,
+    "weekStart": ""
+  }
+}
